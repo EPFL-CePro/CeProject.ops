@@ -1,0 +1,4 @@
+all:
+  hosts:
+    ceproject:
+      inventory_environment: prod

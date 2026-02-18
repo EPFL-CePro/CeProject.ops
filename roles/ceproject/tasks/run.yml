@@ -1,0 +1,16 @@
+- name: Ensure that CeProject repository is present and up to date
+  git:
+    repo: 'https://github.com/epfl-cepro/ceproject'
+    dest: /data/ceproject
+    version: "main"
+    force: yes
+
+- name: "Copy env secrets from Keybase"
+  copy:
+    src: "/keybase/team/ceproject/.env"
+    dest: /data/ceproject/.env
+
+- name: "Run CeProject using docker-compose"
+  community.docker.docker_compose_v2:
+    project_src: /data/ceproject
+  register: output

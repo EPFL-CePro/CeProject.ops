@@ -1,0 +1,13 @@
+- include_tasks:
+    file: setup.yml
+    apply:
+      tags:
+        - ceproject.setup
+  tags: always
+
+- include_tasks:
+    file: run.yml
+    apply:
+      tags:
+        - ceproject.run
+  tags: always
