@@ -14,3 +14,10 @@
   community.docker.docker_compose_v2:
     project_src: /data/ceproject
   register: output
+
+- name: "Launch backup crontab script"
+  ansible.builtin.cron:
+    name: "configurate postgres backup crontab"
+    minute: "0"
+    hour: "0"
+    job: "/data/ceproject/backup_crontab.sh >> /var/log/pg_backup.log 2>&1"
