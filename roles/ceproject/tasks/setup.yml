@@ -15,3 +15,33 @@
     name: git
     state: latest
     update_cache: true
+
+- name: Install cifs-utils
+  apt:
+    name: cifs-utils
+    state: latest
+    update_cache: true
+
+- name: Ensure /data/.cifs directory exists
+  file: 
+    path: /data/.cifs/
+    state: directory
+
+- name: Copy cifs credentials from Keybase
+  copy:
+    src: /keybase/team/ceproject/cifs_creds
+    dest: /data/.cifs/creds_ceproject_backup
+
+- name: Ensure /data/ceproject/NAS-backup mounting directory exists
+  file: 
+    path: /data/ceproject/NAS-backup
+    state: directory
+
+# Mounting SMB to /data/ceproject/NAS-backup, also putting this configuration into /etc/fstab so that it automatically mounts on restart.
+- name: Mount NAS-backup SMB share
+  ansible.posix.mount:
+    path: /data/ceproject/NAS-backup
+    src: //vpsi1files.epfl.ch/CEPRO/BACKUP/CeProject
+    fstype: cifs
+    opts: credentials=/data/.cifs/creds_ceproject_backup,iocharset=utf8,vers=3.0,_netdev
+    state: mounted
