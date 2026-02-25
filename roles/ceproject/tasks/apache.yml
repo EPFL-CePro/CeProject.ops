@@ -1,0 +1,43 @@
+- name: Enable required Apache proxy modules
+  community.general.apache2_module:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - proxy
+    - proxy_http
+    - headers
+    - rewrite
+
+- name: Ensure Apache certs repository exists
+  file:
+    state: directory
+    path: "{{ item }}"
+    mode: '0755'
+  with_items:
+   - /etc/ssl/
+   - /etc/ssl/certs/
+   - /etc/ssl/certs/ceproject/
+
+- name: Copy certs to /etc/ssl/certs/ceproject from Keybase
+  copy:
+    src: "{{ item }}"
+    dest: /etc/ssl/certs/ceproject/
+    owner: root
+    mode: 600
+  with_fileglob:
+    - "/keybase/team/ceproject/ceproject-serveur.key"
+    - "/keybase/team/ceproject/DigiCertCA.crt"
+    - "/keybase/team/ceproject/ceproject_epfl_ch-crt.pem"
+
+- name: Create Apache virtual host configuration
+  ansible.builtin.template:
+    src: ceproject.conf.j2
+    dest: /etc/apache2/sites-available/ceproject.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Enable CeProject site and reload Apache
+  ansible.builtin.shell: |
+    systemctl reload apache2
+    a2ensite ceproject.conf

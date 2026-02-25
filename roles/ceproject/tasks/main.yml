@@ -11,3 +11,10 @@
       tags:
         - ceproject.run
   tags: always
+
+- include_tasks:
+    file: apache.yml
+    apply:
+      tags:
+        - ceproject.apache
+  tags: always
