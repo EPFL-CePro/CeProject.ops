@@ -1,11 +1,11 @@
 # CeProject.ops
-This repository regroups the configuration-as-code to deploy [CeProject] on a dedicated VM.
-CeProject is a deployment of the Open Source tool [OpenProject] for the CePro team at EPFL.
-It uses [Ansible] wrapped in a [suitcase] called [`ceprojectsible`](./ceprojectsible).
 
 > [!IMPORTANT]
 > This has been moved to [gitlab.epfl.ch](https://gitlab.epfl.ch/cepro-it/ceproject.ops), and merged with repository [CeProject](https://github.com/EPFL-CePro/CeProject/).
 
+This repository regroups the configuration-as-code to deploy [CeProject] on a dedicated VM.
+CeProject is a deployment of the Open Source tool [OpenProject] for the CePro team at EPFL.
+It uses [Ansible] wrapped in a [suitcase] called [`ceprojectsible`](./ceprojectsible).
 
 ## Prerequisites
 - Access to the [Keybase] team `/keybase/team/ceproject/`
